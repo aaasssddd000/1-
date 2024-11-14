@@ -1,0 +1,109 @@
+@keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -10px, 0); }
+}
+
+@keyframes rotate {
+    from { transform: rotate3d(0, 0, 1, 0deg); }
+    to { transform: rotate3d(0, 0, 1, 360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+.shape {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hexagon {
+    animation: float 3s ease-in-out infinite;
+}
+
+.circle {
+    animation: rotate 20s linear infinite;
+}
+
+.diamond {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.triangle {
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.shape:hover {
+    filter: brightness(1.2);
+}
+
+.shape:active {
+    transform: scale(0.95);
+}
+
+.gradient-text {
+    background-size: 200% 200%;
+    animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 波纹效果 */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: ripple 1s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 页面切换动画 */
+.page-transition {
+    animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 模态框动画 */
+.modal {
+    animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* 优化动画性能 */
+.shape, .activity-card {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* 添加平滑滚动 */
+.virtual-scroller {
+    position: absolute;
+    width: 100%;
+    will-change: transform;
+} 

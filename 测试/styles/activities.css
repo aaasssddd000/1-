@@ -1,0 +1,614 @@
+.activities-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    transition: min-height 0.3s ease;
+}
+
+.filter-section {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    flex: 1;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text);
+}
+
+.tags-filter {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-shadow: var(--text-shadow);
+    padding: 0.6rem 1.2rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    transform-origin: center;
+}
+
+.tag.active {
+    transform: scale(1.05);
+}
+
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    min-height: 200px;
+    position: relative;
+    margin-top: 2rem;
+}
+
+.activity-card {
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+}
+
+.activity-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
+    gap: 1rem;
+}
+
+.activity-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+    height: 2.6rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.activity-meta {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.activity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    min-height: 32px;
+}
+
+.activity-tags .tag {
+    padding: 0.3rem 0.8rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.activity-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.activity-actions button {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    will-change: transform, background-color;
+}
+
+.activity-actions button:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+.delete-btn {
+    background: #ff4757;
+}
+
+.cancel-btn {
+    background: #ffa502;
+}
+
+.delete-btn:hover {
+    background: #e84118;
+}
+
+.cancel-btn:hover {
+    background: #e1b12c;
+}
+
+.activity-details h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+.activity-details p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    text-shadow: var(--text-shadow);
+}
+
+.comments-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+    text-shadow: var(--text-shadow);
+}
+
+.comment-author {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-shadow: var(--text-shadow);
+}
+
+.comment-content {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    text-shadow: var(--text-shadow);
+}
+
+.no-activities {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    margin: 2rem 0;
+}
+
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 添加平滑过渡效果 */
+.page {
+    transition: opacity 0.3s ease;
+}
+
+.page-transition {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.activities-grid.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* 活动列表页面布局 */
+.activities-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    min-height: calc(100vh - 150px);
+}
+
+/* 左侧筛选栏 */
+.filter-sidebar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    z-index: 10;
+}
+
+.filter-sidebar h3 {
+    color: var(--text);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.tags-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin: 2rem 0;
+}
+
+.tag {
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.tag:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(10px);
+}
+
+.tag.active {
+    background: var(--primary);
+    color: white;
+    transform: translateX(10px);
+}
+
+/* 右侧内容区 */
+.activities-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.activities-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.view-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.view-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* 活动卡片网格布局 */
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+/* 列表视图样式 */
+.activities-grid.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.activities-grid.list-view .activity-card {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    height: 150px;
+}
+
+.activities-grid.list-view .activity-image {
+    height: 100%;
+}
+
+/* 标签样式优化 */
+.tags-filter .tag {
+    display: inline-block;
+    padding: 0.8rem 1.2rem;
+    margin: 0.5rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.tags-filter .tag:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.tags-filter .tag.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--glow);
+}
+
+/* 日期筛选样式 */
+.date-filter select {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+/* 搜索框样式优化 */
+.search-box {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 1rem 3rem 1rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.search-box .search-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* 活动卡片内的标签样式 */
+.activity-card .activity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+    min-height: 32px; /* 固定最小高度 */
+}
+
+.activity-card .activity-tags .tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    transform-origin: center;
+    will-change: transform;
+    user-select: none;
+}
+
+/* 筛选栏的标签样式 */
+.filter-sidebar .tags-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin: 1rem 0;
+}
+
+.filter-sidebar .tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform-origin: left center;
+    will-change: transform, background-color;
+}
+
+.filter-sidebar .tag:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(10px);
+}
+
+.filter-sidebar .tag.active {
+    background: var(--primary);
+    color: white;
+    transform: translateX(10px);
+}
+
+/* 防止标签容器高度变化 */
+.activity-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+}
+
+.activity-meta {
+    margin: 0.5rem 0;
+    flex-shrink: 0;
+}
+
+.activity-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* 优化按钮布局 */
+.activity-actions button {
+    flex: 1;
+    white-space: nowrap;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    will-change: transform, background-color;
+}
+
+.activity-actions button:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* 确保卡片内容布局稳定 */
+.activity-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.activity-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.activity-card.cancelled {
+    opacity: 0.5;
+    pointer-events: none;
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.activity-card.cancelled .activity-title {
+    text-decoration: line-through;
+    color: #ff4757;
+}
+
+.activity-card.cancelled .activity-actions {
+    display: none;
+}
+
+/* 已取消活动的样式 */
+.activity-card.cancelled {
+    opacity: 0.8;
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.activity-card.cancelled .activity-title {
+    text-decoration: line-through;
+}
+
+/* 确保已取消活动中的删除按钮可见 */
+.activity-card.cancelled .activity-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.activity-card.cancelled .activity-actions button {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 状态标签样式 */
+.status-cancelled {
+    background: #ff4757;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+}
+
+/* 按钮样式 */
+.activity-actions button {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn {
+    background: #ff4757;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #ff6b81;
+    transform: translateY(-2px);
+} 

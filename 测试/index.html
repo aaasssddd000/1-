@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园活动广场</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/activities.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <!-- 动态背景 -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- 页眉 -->
+    <header>
+        <div class="logo">
+            <span class="gradient-text" style="cursor: pointer;" onclick="app.showHomePage()">活动广场</span>
+        </div>
+        <nav>
+            <div class="nav-left">
+                <button class="nav-btn" data-page="home">首页</button>
+                <button class="nav-btn" data-page="activities">活动列表</button>
+                <button class="nav-btn" data-page="myEvents">我的报名</button>
+                <button class="nav-btn" data-page="myCreated">我的创建</button>
+            </div>
+            <div class="nav-right">
+                <div class="user-info">
+                    <span class="user-name"></span>
+                    <button class="nav-btn logout-btn" onclick="authManager.confirmLogout()">
+                        <i class="logout-icon">🚪</i>
+                        退出登录
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主页面 -->
+    <div id="homePage" class="page">
+        <div class="home-container">
+            <!-- 中心圆形 -->
+            <div class="center-circle">
+                <span class="circle-text">校园活动</span>
+            </div>
+            
+            <!-- 围绕中心的功能区 -->
+            <div class="orbit-container">
+                <!-- 发布活动 - 六边形 -->
+                <div class="shape hexagon" data-action="publish">
+                    <div class="content">
+                        <i class="icon">✏️</i>
+                        <span>发布活动</span>
+                    </div>
+                </div>
+                <!-- 活动列表 - 圆形 -->
+                <div class="shape circle" data-action="list">
+                    <div class="content">
+                        <i class="icon">📋</i>
+                        <span>活动列表</span>
+                    </div>
+                </div>
+                <!-- 我的报名 - 菱形 -->
+                <div class="shape diamond" data-action="myEvents">
+                    <div class="content">
+                        <i class="icon">🎯</i>
+                        <span>我的报名</span>
+                    </div>
+                </div>
+                <!-- 活动搜索 - 三角形 -->
+                <div class="shape triangle" data-action="search">
+                    <div class="content">
+                        <i class="icon">🔍</i>
+                        <span>搜索活动</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 活动列表页面 -->
+    <div id="activitiesPage" class="page" style="display: none;">
+        <div class="activities-layout">
+            <!-- 左侧筛选栏 -->
+            <div class="filter-sidebar">
+                <div class="search-box">
+                    <input type="text" placeholder="搜索活动..." id="searchInput">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="tags-filter">
+                    <h3>活动类型</h3>
+                    <span class="tag active">全部</span>
+                    <span class="tag">文艺</span>
+                    <span class="tag">运动</span>
+                    <span class="tag">学术</span>
+                    <span class="tag">公益</span>
+                </div>
+                <div class="date-filter">
+                    <h3>时间筛选</h3>
+                    <select id="dateFilter">
+                        <option value="all">全部时间</option>
+                        <option value="today">今天</option>
+                        <option value="week">本周</option>
+                        <option value="month">本月</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 右侧活动展示区 -->
+            <div class="activities-content">
+                <div class="activities-header">
+                    <h2>活动列表</h2>
+                    <div class="view-options">
+                        <button class="view-btn active" data-view="grid">网格视图</button>
+                        <button class="view-btn" data-view="list">列表视图</button>
+                    </div>
+                </div>
+                <div class="activities-grid" id="activitiesList">
+                    <!-- 活动卡片由 JavaScript 动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <p>校园活动广场 &copy; 2024</p>
+    </footer>
+
+    <!-- 发布活动模态框 -->
+    <div class="modal" id="publishModal">
+        <div class="modal-content">
+            <h2>发布新活动</h2>
+            <form id="publishForm">
+                <div class="form-group">
+                    <input type="text" name="title" placeholder="活动名称" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="description" placeholder="活动描述" required></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="location" placeholder="活动地点" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="tags" placeholder="标签（用逗号分隔）" required>
+                </div>
+                <div class="form-group">
+                    <label for="activityImage">活动图片</label>
+                    <input type="file" name="image" id="activityImage" accept="image/*">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">发布活动</button>
+                    <button type="button" class="cancel-btn" onclick="app.closeModal(this.closest('.modal'))">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 定义全局用户变量
+        const currentUser = 'testUser';
+        
+        // 添加调试信息
+        console.log('Starting application...');
+    </script>
+    <script src="scripts/background.js"></script>
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/activities.js"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+        // 确保所有脚本加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, checking initialization...');
+            if (!window.activityManager) {
+                console.log('Creating new ActivityManager...');
+                window.activityManager = new ActivityManager();
+            }
+            if (!window.app) {
+                console.log('Creating new AppManager...');
+                window.app = new AppManager();
+            }
+        });
+    </script>
+</body>
+</html> 

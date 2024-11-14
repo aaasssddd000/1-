@@ -1,0 +1,652 @@
+:root {
+    --primary: #FF6B6B;
+    --secondary: #4ECDC4;
+    --accent: #FFE66D;
+    --background: #2C3E50;
+    --text: #ECF0F1;
+    --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    --glow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+/* 动态背景 */
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* 页眉样式 */
+header {
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: var(--text-shadow);
+    letter-spacing: 1px;
+}
+
+/* 形状容器 */
+.shape-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+/* 基础形状样式 */
+.shape {
+    aspect-ratio: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+/* 具体形状样式 */
+.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: linear-gradient(45deg, var(--primary), #FF8E8E);
+}
+
+.circle {
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--secondary), #45B7AF);
+}
+
+.diamond {
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    background: linear-gradient(45deg, var(--accent), #FFD700);
+}
+
+.triangle {
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    background: linear-gradient(45deg, #A8E6CF, #7ED8C5);
+}
+
+/* 形状悬停效果 */
+.shape:hover {
+    transform: scale(1.05);
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--background);
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* 增强标题文字 */
+h1, h2, h3, .gradient-text {
+    text-shadow: var(--text-shadow);
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+/* 增强导航文字 */
+.nav-btn {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+    text-shadow: var(--text-shadow);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--glow);
+}
+
+.nav-btn.active {
+    background: var(--primary);
+    box-shadow: var(--glow);
+}
+
+/* 形状内的文字 */
+.shape .content {
+    text-align: center;
+    padding: 1rem;
+}
+
+.shape .icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    text-shadow: var(--text-shadow);
+}
+
+.shape span {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-shadow: var(--text-shadow);
+    background: linear-gradient(45deg, var(--text), #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* 增强页脚文字 */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+footer p {
+    font-size: 1rem;
+    text-shadow: var(--text-shadow);
+    opacity: 0.8;
+}
+
+/* 消息提示样式 */
+.message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    color: white;
+    box-shadow: var(--glow);
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.message-success {
+    background: var(--primary);
+}
+
+.message-error {
+    background: #ff4757;
+}
+
+/* 表单样式 */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.submit-btn,
+.cancel-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.submit-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+}
+
+.submit-btn:hover,
+.cancel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+}
+
+/* 加载动画 */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 优化滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+/* 优化交互响应 */
+.activity-card {
+    transform-origin: center bottom;
+}
+
+.activity-card:active {
+    transform: scale(0.98);
+}
+
+/* 添加到现有样式中 */
+.nav-btn {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 0.8rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-btn.active {
+    background: var(--primary);
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.logo .gradient-text {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo .gradient-text:hover {
+    transform: scale(1.05);
+}
+
+/* 主页特有样式 */
+.home-container {
+    position: relative;
+    height: calc(100vh - 150px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.center-circle {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.circle-text {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: var(--text-shadow);
+}
+
+.orbit-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    animation: rotate 60s linear infinite;
+}
+
+.shape {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 位置布局 */
+.hexagon { top: 0; left: 50%; transform: translateX(-50%); }
+.circle { right: 0; top: 50%; transform: translateY(-50%); }
+.diamond { bottom: 0; left: 50%; transform: translateX(-50%); }
+.triangle { left: 0; top: 50%; transform: translateY(-50%); } 
+
+/* 主页文字动效 */
+.center-circle .circle-text {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: var(--text-shadow);
+    position: relative;
+    display: inline-block;
+    animation: textFloat 3s ease-in-out infinite;
+}
+
+.center-circle .circle-text::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    animation: textUnderline 2s ease-in-out infinite;
+}
+
+.shape .content {
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.shape .icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    text-shadow: var(--text-shadow);
+    animation: iconPop 0.3s ease-out;
+    transform-origin: center;
+}
+
+.shape:hover .icon {
+    animation: iconWiggle 0.5s ease-in-out;
+}
+
+.shape span {
+    font-size: 1.2rem;
+    font-weight: 500;
+    background: linear-gradient(45deg, var(--text), #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+    opacity: 0;
+    transform: translateY(10px);
+    animation: textReveal 0.5s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+/* 添加新的动画关键帧 */
+@keyframes textFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+    50% {
+        transform: translateY(-5px) rotate(3deg);
+    }
+}
+
+@keyframes textUnderline {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scaleX(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.2);
+    }
+}
+
+@keyframes iconPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes iconWiggle {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-15deg);
+    }
+    75% {
+        transform: rotate(15deg);
+    }
+}
+
+@keyframes textReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* 为每个形状添加不同的动画延迟 */
+
+/* 添加加载状态样式 */
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+/* 添加错误消息样式 */
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 0, 0, 0.1);
+    border-radius: 1rem;
+    margin: 2rem 0;
+}
+
+/* 添加成功消息样式 */
+.success-message {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(0, 255, 0, 0.1);
+    border-radius: 1rem;
+    margin: 2rem 0;
+}
+
+/* 添加登出按钮样式 */
+.logout-btn {
+    background: rgba(255, 71, 87, 0.2) !important;
+    color: #ff4757 !important;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #ff4757 !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+}
+
+/* 导航栏布局 */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* 用户信息样式 */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-name {
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* 登出按钮样式 */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 71, 87, 0.1) !important;
+    color: #ff4757 !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.logout-btn:hover {
+    background: #ff4757 !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+}
+
+.logout-btn:active {
+    transform: translateY(0);
+}
+
+.logout-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.logout-btn:hover .logout-icon {
+    transform: translateX(3px);
+}
+
+/* 登出确认模态框样式 */
+.logout-confirm-modal .modal-content {
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modal-actions button {
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+}
+
+.confirm-btn {
+    background: #ff4757;
+    color: white;
+}
+
+.cancel-btn:hover, .confirm-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* 登出动画 */
+@keyframes logoutSlide {
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.logout-animation {
+    animation: logoutSlide 0.5s ease-in-out forwards;
+}
